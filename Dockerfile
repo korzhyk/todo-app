@@ -20,4 +20,6 @@ COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 
+EXPOSE 3000
+
 CMD [ "sh", "-c", "pnpm start:prod"]
