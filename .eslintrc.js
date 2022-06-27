@@ -7,6 +7,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
+    '@antfu/eslint-config',
   ],
   root: true,
   env: {
