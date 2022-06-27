@@ -1,9 +1,14 @@
 import { Injectable } from '@nestjs/common'
+import { InjectKnex, Knex } from 'nestjs-knex'
 import type { CreateTodoDto } from './dto/create-todo.dto'
 import type { UpdateTodoDto } from './dto/update-todo.dto'
 
 @Injectable()
 export class TodosService {
+  constructor(
+    @InjectKnex() private readonly knex: Knex,
+  ) {}
+
   create(createTodoDto: CreateTodoDto) {
     return 'This action adds a new todo'
   }
