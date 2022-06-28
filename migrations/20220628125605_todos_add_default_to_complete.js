@@ -4,7 +4,7 @@
  */
 exports.up = function (knex) {
   return knex.schema.alterTable('todos', (table) => {
-    table.boolean('complete').defaultTo(false).alter()
+    table.boolean('complete').notNullable().defaultTo(false).alter()
   })
 }
 
