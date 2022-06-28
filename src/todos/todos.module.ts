@@ -1,16 +1,16 @@
-import type { Knex } from 'knex'
 import { Module } from '@nestjs/common'
 import { KnexModule } from 'nestjs-knex'
-import KnexEnviroments from '../../knexfile'
 import { TodosService } from './todos.service'
 import { TodosController } from './todos.controller'
 
-const knexConfig: Knex.Config = KnexEnviroments[process.env.NODE_ENV]
-
 @Module({
   imports: [
-    KnexModule.forRoot({
-      config: knexConfig,
+    KnexModule.forRootAsync({
+      useFactory() {
+        return import('../../knexfile').then((knexEnvironments) => {
+          return { config: knexEnvironments[process.env.NODE_ENV] }
+        })
+      },
     }),
   ],
   controllers: [TodosController],
