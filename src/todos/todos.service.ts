@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectKnex, Knex } from 'nestjs-knex'
+import type { Todo } from './entities/todo.entity'
 import type { CreateTodoDto } from './dto/create-todo.dto'
 import type { UpdateTodoDto } from './dto/update-todo.dto'
 
@@ -9,23 +10,30 @@ export class TodosService {
     @InjectKnex() private readonly knex: Knex,
   ) {}
 
-  create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo'
+  async create(createTodoDto: CreateTodoDto) {
+    const [id] = await this.knex<Todo>('todos').insert(createTodoDto)
+    return this.findOne(id)
   }
 
-  findAll() {
-    return 'This action returns all todos'
+  async findAll() {
+    const todos = await this.knex<Todo>('todos')
+    return todos
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} todo`
+  async findOne(id: number) {
+    const todo = await this.knex<Todo>('todos').where({ id }).first()
+    if (!todo)
+      throw new NotFoundException()
+
+    return todo
   }
 
-  update(id: number, updateTodoDto: UpdateTodoDto) {
-    return `This action updates a #${id} todo`
+  async update(id: number, updateTodoDto: UpdateTodoDto) {
+    await this.knex<Todo>('todos').where({ id }).update(updateTodoDto)
+    return this.findOne(id)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} todo`
+  async remove(id: number) {
+    await this.knex<Todo>('todos').where({ id }).del()
   }
 }
