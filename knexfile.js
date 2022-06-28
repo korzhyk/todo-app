@@ -1,7 +1,5 @@
-import type { Knex } from 'knex'
-
 // Shared postgres env2config
-const pgConnection: Knex.PgConnectionConfig = {
+const pgConnection = {
   host: process.env.PGHOST || '127.0.0.1',
   port: +process.env.PGPORT || 5432,
   database: process.env.PGDATABASE,
@@ -9,7 +7,7 @@ const pgConnection: Knex.PgConnectionConfig = {
   password: process.env.PGPASSWORD,
 }
 
-const config: { [key: string]: Knex.Config } = {
+const config = {
   development: {
     client: 'sqlite3',
     connection: {
@@ -50,4 +48,4 @@ const config: { [key: string]: Knex.Config } = {
 
 }
 
-export default config
+module.exports = config
