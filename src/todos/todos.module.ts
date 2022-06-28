@@ -1,7 +1,7 @@
 import type { Knex } from 'knex'
 import { Module } from '@nestjs/common'
 import { KnexModule } from 'nestjs-knex'
-import * as KnexEnviroments from '../../knexfile'
+import KnexEnviroments from '../../knexfile'
 import { TodosService } from './todos.service'
 import { TodosController } from './todos.controller'
 
