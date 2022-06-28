@@ -10,7 +10,7 @@ import { TodosModule } from '../src/todos/todos.module'
 
 describe('Todos', () => {
   let app: INestApplication
-  const testTodo = { title: 'Buy a milk', complete: false }
+  const testTodo = { title: 'Buy milk', complete: false }
   const mockTodos = {
     _counter: 0,
     _todos: [] as Todo[],
@@ -65,8 +65,8 @@ describe('Todos', () => {
   it('/todos/1 (PUT)', async () => {
     return request(app.getHttpServer())
       .patch('/todos/1')
-      .send({ title: 'Buy a coffee' })
-      .expect(200, { id: 1, ...testTodo, title: 'Buy a coffee' })
+      .send({ title: 'Buy coffee' })
+      .expect(200, { id: 1, ...testTodo, title: 'Buy coffee' })
   })
 
   it('/todos/1 (DELETE)', async () => {
